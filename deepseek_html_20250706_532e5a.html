@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shoppings do Brás - São Paulo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1a2a6c;
+            --secondary: #b21f1f;
+            --accent: #fdbb2d;
+            --light: #f8f9fa;
+            --dark: #0c1446;
+            --success: #28a745;
+            --danger: #dc3545;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            border-radius: 0 0 20px 20px;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><polygon points="0,0 100,0 100,100" fill="rgba(255,255,255,0.05)"/></svg>');
+            background-size: cover;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: fadeInDown 0.8s ease;
+        }
+        
+        header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.9;
+            animation: fadeInUp 0.8s ease;
+        }
+        
+        .search-bar {
+            margin: 25px 0 30px;
+            display: flex;
+            justify-content: center;
+            animation: fadeIn 1s ease;
+        }
+        
+        .search-bar input {
+            width: 70%;
+            max-width: 600px;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 50px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            font-size: 1.1rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        
+        .search-bar input:focus {
+            box-shadow: 0 5px 25px rgba(253, 187, 45, 0.3);
+        }
+        
+        .search-bar button {
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 0 25px;
+            margin-left: 10px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+        }
+        
+        .search-bar button:hover {
+            background: #e6a520;
+            transform: translateY(-2px);
+        }
+        
+        .filters {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+            animation: fadeIn 1s ease;
+        }
+        
+        .filter-btn {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 50px;
+            padding: 8px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 30px 0;
+            animation: fadeIn 1s ease;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            flex: 1;
+            min-width: 200px;
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-card i {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 15px;
+        }
+        
+        .stat-card .number {
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        
+        .shopping-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .shopping-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            animation: fadeInUp 0.5s ease;
+            animation-fill-mode: both;
+        }
+        
+        .shopping-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        
+        .card-header {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .card-header img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .shopping-card:hover .card-header img {
+            transform: scale(1.1);
+        }
+        
+        .card-header .shopping-name {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            color: white;
+            padding: 15px;
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+        
+        .rating {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.7);
+            color: var(--accent);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .rating i {
+            margin-right: 5px;
+        }
+        
+        .card-content {
+            padding: 20px;
+        }
+        
+        .card-content p {
+            margin-bottom: 15px;
+            color: #555;
+            font-style: italic;
+            min-height: 60px;
+        }
+        
+        .info-item {
+            display: flex;
+            margin-bottom: 12px;
+            align-items: flex-start;
+        }
+        
+        .info-item i {
+            color: var(--secondary);
+            margin-right: 10px;
+            min-width: 20px;
+            margin-top: 3px;
+        }
+        
+        .status {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-left: 8px;
+        }
+        
+        .status.open {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        .status.closed {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        
+        .map-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+        
+        .map-section h2 {
+            color: var(--primary);
+            margin-bottom: 25px;
+            text-align: center;
+            font-size: 2rem;
+        }
+        
+        .map-container {
+            height: 500px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            background: #e9ecef;
+            position: relative;
+        }
+        
+        .map-placeholder {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .map-placeholder i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+        
+        .map-placeholder h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+        
+        .map-placeholder p {
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+        
+        .tips {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+        
+        .tips h2 {
+            color: var(--primary);
+            margin-bottom: 25px;
+            text-align: center;
+            font-size: 2rem;
+        }
+        
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .tip-card {
+            background: linear-gradient(to bottom, white, #f8f9fa);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            border-top: 4px solid var(--accent);
+        }
+        
+        .tip-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .tip-card h3 {
+            color: var(--secondary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            font-size: 1.3rem;
+        }
+        
+        .tip-card h3 i {
+            margin-right: 12px;
+            font-size: 1.5rem;
+        }
+        
+        .tip-card p {
+            color: #555;
+            line-height: 1.7;
+        }
+        
+        footer {
+            background: linear-gradient(135deg, var(--dark), var(--primary));
+            color: white;
+            text-align: center;
+            padding: 40px 0;
+            border-radius: 20px 20px 0 0;
+            margin-top: 20px;
+        }
+        
+        footer .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        footer h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+        
+        footer p {
+            margin-bottom: 15px;
+            opacity: 0.8;
+            max-width: 700px;
+        }
+        
+        .social-icons {
+            margin: 25px 0;
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            color: white;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icons a:hover {
+            background: var(--accent);
+            transform: translateY(-5px);
+        }
+        
+        .copyright {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            width: 100%;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        
+        /* Animações */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .shopping-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .map-container {
+                height: 350px;
+            }
+            
+            .search-bar input {
+                width: 100%;
+            }
+            
+            .search-bar {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .search-bar button {
+                width: 100%;
+                padding: 15px;
+                margin-left: 0;
+            }
+            
+            .stat-card {
+                min-width: 100%;
+            }
+        }
+        
+        /* Efeito de carregamento para os cards */
+        .shopping-card:nth-child(1) { animation-delay: 0.1s; }
+        .shopping-card:nth-child(2) { animation-delay: 0.2s; }
+        .shopping-card:nth-child(3) { animation-delay: 0.3s; }
+        .shopping-card:nth-child(4) { animation-delay: 0.4s; }
+        .shopping-card:nth-child(5) { animation-delay: 0.5s; }
+        .shopping-card:nth-child(6) { animation-delay: 0.6s; }
+        .shopping-card:nth-child(7) { animation-delay: 0.7s; }
+        .shopping-card:nth-child(8) { animation-delay: 0.8s; }
+        .shopping-card:nth-child(9) { animation-delay: 0.9s; }
+        .shopping-card:nth-child(10) { animation-delay: 1.0s; }
+        .shopping-card:nth-child(11) { animation-delay: 1.1s; }
+        .shopping-card:nth-child(12) { animation-delay: 1.2s; }
+        .shopping-card:nth-child(13) { animation-delay: 1.3s; }
+        .shopping-card:nth-child(14) { animation-delay: 1.4s; }
+        .shopping-card:nth-child(15) { animation-delay: 1.5s; }
+        .shopping-card:nth-child(16) { animation-delay: 1.6s; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <h1><i class="fas fa-shopping-cart"></i> Shoppings do Brás</h1>
+            <p>Conheça os maiores e mais populares centros comerciais da região do Brás em São Paulo</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <section class="intro">
+            <div class="search-bar">
+                <input type="text" placeholder="Pesquisar shoppings por nome, produto ou característica...">
+                <button><i class="fas fa-search"></i> Buscar</button>
+            </div>
+            
+            <div class="filters">
+                <button class="filter-btn active">Todos</button>
+                <button class="filter-btn">Abertos agora</button>
+                <button class="filter-btn">Moda</button>
+                <button class="filter-btn">Eletrônicos</button>
+                <button class="filter-btn">Decoração</button>
+                <button class="filter-btn">Acessórios</button>
+            </div>
+            
+            <div class="stats">
+                <div class="stat-card">
+                    <i class="fas fa-store"></i>
+                    <div class="number">16</div>
+                    <div>Shoppings listados</div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-star"></i>
+                    <div class="number">4.4+</div>
+                    <div>Avaliação média</div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-users"></i>
+                    <div class="number">200k+</div>
+                    <div>Avaliações totais</div>
+                </div>
+            </div>
+        </section>
+        
+        <h2 style="text-align: center; color: var(--primary); margin: 30px 0 20px; font-size: 2rem;">
+            <i class="fas fa-store"></i> Conheça os Shoppings
+        </h2>
+        
+        <div class="shopping-grid">
+            <!-- Shopping Busca Busca -->
+            <div class="shopping-card">
+                <div class="card-header">
+                    <img src="https://images.unsplash.com/photo-1601924994987-69e26d50dc26?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80" alt="Busca Busca">
+                    <div class="shopping-name">Busca Busca</div>
+                    <div class="rating"><i class="fas fa-star"></i> 4,6 ★ (11 mil)</div>
+                </div>
+                <div class="card-content">
+                    <p>"A loja tem uma variedade gigante de produtos q vc fica louca 🤩."</p>
+                    <div class="info-item">
+                        <i class="fas fa-location-dot"></i>
+                        <span>R. Barão de Ladário, 566 - Brás, São Paulo</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-clock"></i>
+                        <span><span class="status open">Aberto</span> ⋅ Fecha às 16:00</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-phone"></i>
+                        <span>(11) 96566-7641</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Shopping Total Brás -->
+            <div class="shopping-card">
+                <div class="card-header">
+                    <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80" alt="Shopping Total Brás">
+                    <div class="shopping-name">Shopping Total Brás</div>
+                    <div class="rating"><i class="fas fa-star"></i> 4,4 ★ (15 mil)</div>
+                </div>
+                <div class="card-content">
+                    <p>"Shopping com grande variedade de produtos e fácil acessibilidade"</p>
+                    <div class="info-item">
+                        <i class="fas fa-location-dot"></i>
+                        <span>R. João Teodoro, 1200 - Brás, São Paulo</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-clock"></i>
+                        <span><span class="status closed">Fechado</span> ⋅ Abre seg. às 05:00</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-phone"></i>
+                        <span>(11) 4373-7500</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Shopping Vautier Premium -->
+            <div class="shopping-card">
+                <div class="card-header">
+                    <img src="https://images.unsplash.com/photo-1576153192396-180ecef822a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80" alt="Shopping Vautier Premium">
+                    <div class="shopping-name">Shopping Vautier Premium</div>
+                    <div class="rating"><i class="fas fa-star"></i> 4,5 ★ (25 mil)</div>
+                </div>
+                <div class="card-content">
+                    <p>"Gostei mais organizado, lojas com produtos de qualidade..vale a visita"</p>
+                    <div class="info-item">
+                        <i class="fas fa-location-dot"></i>
+                        <span>R. Tiers, 184 - Brás, São Paulo</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-clock"></i>
+                        <span><span class="status closed">Fechado</span> ⋅ Abre seg. às 02:00</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-phone"></i>
+                        <span>(11) 2739-7000</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Shopping Plaza Polo -->
+            <div class="shopping-card">
+                <div class="card-header">
+                    <img src="https://images.unsplash.com/photo-1607082350899-7e105aa886ae?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80" alt="Shopping Plaza Polo">
+                    <div class="shopping-name">Shopping Plaza Polo</div>
+                    <div class="rating"><i class="fas fa-star"></i> 4,5 ★ (2,5 mil)</div>
+                </div>
+                <div class="card-content">
+                    <p>"Local amplo e com grande variedade de lojas e produtos"</p>
+                    <div class="info-item">
+                        <i class="fas fa-location-dot"></i>
+                        <span>R. Barão de Ladário, 566 - Brás, São Paulo</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-clock"></i>
+                        <span><span class="status open">Aberto</span> ⋅ Fecha às 16:00</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-phone"></i>
+                        <span>(11) 3313-3900</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Shopping 25 Brás -->
+            <div class="shopping-card">
+                <div class="card-header">
+                    <img src="https://images.unsplash.com/photo-1590650153855-d9e808231d41?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80" alt="Shopping 25 Brás">
+                    <div class="shopping-name">Shopping 25 Brás</div>
+                    <div class="rating"><i class="fas fa-star"></i> 4,3 ★ (30 mil)</div>
+                </div>
+                <div class="card-content">
+                    <p>"Muitas lojas,e uma infinidade de produtos bons com preços acessíveis."</p>
+                    <div class="info-item">
+                        <i class="fas fa-location-dot"></i>
+                        <span>R. Barão de Ladário, 402 - Brás, São Paulo</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-clock"></i>
+                        <span><span class="status closed">Fechado</span> ⋅ Abre seg. às 05:00</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-phone"></i>
+                        <span>Sem telefone</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Shopping Vautier -->
+            <div class="shopping-card">
+                <div class="card-header">
+                    <img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80" alt="Shopping Vautier">
+                    <div class="shopping-name">Shopping Vautier</div>
+                    <div class="rating"><i class="fas fa-star"></i> 4,4 ★ (22 mil)</div>
+                </div>
+                <div class="card-content">
+                    <p>"Muita variedade porém pouca variedade de valores entre lojas"</p>
+                    <div class="info-item">
+                        <i class="fas fa-location-dot"></i>
+                        <span>Av. Vautier, 248 - Brás, São Paulo</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-clock"></i>
+                        <span><span class="status closed">Fechado</span> ⋅ Abre seg. à 00:00</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-phone"></i>
+                        <span>(11) 2739-7000</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Shopping Mega Polo Moda - Brás -->
+            <div class="shopping-card">
+                <div class="card-header">
+                    <img src="https://images.unsplash.com/photo-1556905055-8f358a7a47b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80" alt="Shopping Mega Polo Moda">
+                    <div class="shopping-name">Shopping Mega Polo Moda</div>
+                    <div class="rating"><i class="fas fa-star"></i> 4,4 ★ (15 mil)</div>
+                </div>
+                <div class="card-content">
+                    <p>"Bom para quem é lojista e gosta de comprar produtos de qualidade"</p>
+                    <div class="info-item">
+                        <i class="fas fa-location-dot"></i>
+                        <span>R. Barão de Ladário, 566/670 - Brás, São Paulo</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-clock"></i>
+                        <span><span class="status closed">Fechado</span> ⋅ Abre seg. às 07:00</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-phone"></i>
+                        <span>(11) 3311-2800</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Shopping Porto Brás -->
+            <div class="shopping-card">
+                <div class="card-header">
+                    <img src="https://images.unsplash.com/photo-1581539250439-c96689b516dd?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80" alt="Shopping Porto Brás">
+                    <div class="shopping-name">Shopping Porto Brás</div>
+                    <div class="rating"><i class="fas fa-star"></i> 4,4 ★ (14 mil)</div>
+                </div>
+                <div class="card-content">
+                    <p>"Junto com Vautier são os Melhores shopping de compra no Brás em São Paulo"</p>
+                    <div class="info-item">
+                        <i class="fas fa-location-dot"></i>
+                        <span>R. Tiers, 282 - Brás, São Paulo</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-clock"></i>
+                        <span><span class="status closed">Fechado</span> ⋅ Abre seg. às 02:00</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-phone"></i>
+                        <span>(11) 2739-7000</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Shopping Newmall -->
+            <div class="shopping-card">
+                <div class="card-header">
+                    <img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80" alt="Shopping Newmall">
+                    <div class="shopping-name">Shopping Newmall</div>
+                    <div class="rating"><i class="fas fa-star"></i> 4,4 ★ (8,6 mil)</div>
+                </div>
+                <div class="card-content">
+                    <p>"Grande variedade de lojas, especializado em confecção."</p>
+                    <div class="info-item">
+                        <i class="fas fa-location-dot"></i>
+                        <span>R. João Teodoro, 1122 - Brás, São Paulo</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-clock"></i>
+                        <span><span class="status closed">Fechado</span> ⋅ Abre seg. às 05:00</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-phone"></i>
+                        <span>Sem telefone</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Shopping 25 de Março -->
+            <div class="shopping-card">
+                <div class="card-header">
+                    <img src="https://images.unsplash.com/photo-1601924994987-69e26d50dc26?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80" alt="Shopping 25 de Março">
+                    <div class="shopping-name">Shopping 25 de Março</div>
+                    <div class="rating"><i class="fas fa-star"></i> 4,2 ★ (32 mil)</div>
+                </div>
+                <div class="card-content">
+                    <p>Um dos shoppings mais tradicionais da região, com grande variedade de produtos.</p>
+                    <div class="info-item">
+                        <i class="fas fa-location-dot"></i>
+                        <span>R. Vinte e Cinco de Março, 1081 - Brás, São Paulo</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-clock"></i>
+                        <span><span class="status open">Aberto</span> ⋅ Fecha às 14:00</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-phone"></i>
+                        <span>Sem telefone</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Shopping Stunt -->
+            <div class="shopping-card">
+                <div class="card-header">
+                    <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80" alt="Shopping Stunt">
+                    <div class="shopping-name">Shopping Stunt</div>
+                    <div class="rating"><i class="fas fa-star"></i> 4,4 ★ (754)</div>
+                </div>
+                <div class="card-content">
+                    <p>"Lugar com produtos variáveis e bons..amplo e de fácil acesso"</p>
+                    <div class="info-item">
+                        <i class="fas fa-location-dot"></i>
+                        <span>R. Barão de Ladário, 226 - Brás, São Paulo</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-clock"></i>
+                        <span><span class="status open">Aberto</span> ⋅ Fecha às 16:00</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-phone"></i>
+                        <span>Sem telefone</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Shopping Porto Brás (2) -->
+            <div class="shopping-card">
+                <div class="card-header">
+                    <img src="https://images.unsplash.com/photo-1576153192396-180ecef822a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80" alt="Shopping Porto Brás">
+                    <div class="shopping-name">Shopping Porto Brás</div>
+                    <div class="rating"><i class="fas fa-star"></i> 4,6 ★ (370)</div>
+                </div>
+                <div class="card-content">
+                    <p>"Ótimo lugar para quem busca uma variedade de produtos para comprar!"</p>
+                    <div class="info-item">
+                        <i class="fas fa-location-dot"></i>
+                        <span>R. Rodrigues dos Santos, 821 - Brás, São Paulo</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-clock"></i>
+                        <span><span class="status closed">Fechado</span> ⋅ Abre seg. às 03:00</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-phone"></i>
+                        <span>Sem telefone</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- All Brás -->
+            <div class="shopping-card">
+                <div class="card-header">
+                    <img src="https://images.unsplash.com/photo-1607082350899-7e105aa886ae?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80" alt="All Brás">
+                    <div class="shopping-name">All Brás</div>
+                    <div class="rating"><i class="fas fa-star"></i> 4,4 ★ (18 mil)</div>
+                </div>
+                <div class="card-content">
+                    <p>"Variedade de produtos e preços baixos, muito procurado por quem revende."</p>
+                    <div class="info-item">
+                        <i class="fas fa-location-dot"></i>
+                        <span>R. Rodrigues dos Santos, 91-490 - Brás, São Paulo</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-clock"></i>
+                        <span><span class="status closed">Fechado</span> ⋅ Abre seg. às 02:00</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-phone"></i>
+                        <span>Sem telefone</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Galeria Pagé Brás -->
+            <div class="shopping-card">
+                <div class="card-header">
+                    <img src="https://images.unsplash.com/photo-1590650153855-d9e808231d41?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80" alt="Galeria Pagé Brás">
+                    <div class="shopping-name">Galeria Pagé Brás</div>
+                    <div class="rating"><i class="fas fa-star"></i> 4,5 ★ (28 mil)</div>
+                </div>
+                <div class="card-content">
+                    <p>"Lá você encontra os melhores produtos que estão sendo lançados no mundo."</p>
+                    <div class="info-item">
+                        <i class="fas fa-location-dot"></i>
+                        <span>Rua Hannemann, 415 - Brás, São Paulo</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-clock"></i>
+                        <span><span class="status closed">Fechado</span> ⋅ Abre seg. às 06:00</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-phone"></i>
+                        <span>(11) 2395-1000</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Shopping Fashion Brás -->
+            <div class="shopping-card">
+                <div class="card-header">
+                    <img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80" alt="Shopping Fashion Brás">
+                    <div class="shopping-name">Shopping Fashion Brás</div>
+                    <div class="rating"><i class="fas fa-star"></i> 4,2 ★ (1,1 mil)</div>
+                </div>
+                <div class="card-content">
+                    <p>"Conforto de um shopping dentro Da principal rua de Jeans do Brasil."</p>
+                    <div class="info-item">
+                        <i class="fas fa-location-dot"></i>
+                        <span>R. Xavantes, 719 - Brás, São Paulo</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-clock"></i>
+                        <span><span class="status closed">Fechado</span> ⋅ Abre seg. às 07:00</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-phone"></i>
+                        <span>(11) 2291-9000</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Shopping Avenue Brás -->
+            <div class="shopping-card">
+                <div class="card-header">
+                    <img src="https://images.unsplash.com/photo-1556905055-8f358a7a47b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80" alt="Shopping Avenue Brás">
+                    <div class="shopping-name">Shopping Avenue Brás</div>
+                    <div class="rating"><i class="fas fa-star"></i> 4,6 ★ (150)</div>
+                </div>
+                <div class="card-content">
+                    <p>"gosto muito desse shopping além dos preços bons muito limpo e arejado"</p>
+                    <div class="info-item">
+                        <i class="fas fa-location-dot"></i>
+                        <span>R. da Juta, 157 - Box 318/417 - Brás, São Paulo</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-clock"></i>
+                        <span><span class="status closed">Fechado</span> ⋅ Abre seg. às 04:00</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-phone"></i>
+                        <span>Sem telefone</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Futuro shopping Brás -->
+            <div class="shopping-card">
+                <div class="card-header">
+                    <img src="https://images.unsplash.com/photo-1581539250439-c96689b516dd?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80" alt="Futuro shopping Brás">
+                    <div class="shopping-name">Futuro shopping Brás</div>
+                    <div class="rating"><i class="fas fa-star"></i> 4,3 ★ (7)</div>
+                </div>
+                <div class="card-content">
+                    <p>Novo shopping na região com variedade de produtos</p>
+                    <div class="info-item">
+                        <i class="fas fa-location-dot"></i>
+                        <span>R. Tiers, 526 - Brás, São Paulo</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-clock"></i>
+                        <span><span class="status open">Aberto</span> ⋅ Fecha às 13:30</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-phone"></i>
+                        <span>Sem telefone</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Shopping Da Juta -->
+            <div class="shopping-card">
+                <div class="card-header">
+                    <img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80" alt="Shopping Da Juta">
+                    <div class="shopping-name">Shopping Da Juta</div>
+                    <div class="rating"><i class="fas fa-star"></i> 4,3 ★ (5,6 mil)</div>
+                </div>
+                <div class="card-content">
+                    <p>"Shopping com lojas e preços acessíveis, vale a pena conhecer."</p>
+                    <div class="info-item">
+                        <i class="fas fa-location-dot"></i>
+                        <span>R. da Juta, 303 - Brás, São Paulo</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-clock"></i>
+                        <span><span class="status closed">Fechado</span> ⋅ Abre seg. às 02:00</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-phone"></i>
+                        <span>(11) 2796-7643</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Shopping VHT -->
+            <div class="shopping-card">
+                <div class="card-header">
+                    <img src="https://images.unsplash.com/photo-1601924994987-69e26d50dc26?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80" alt="Shopping VHT">
+                    <div class="shopping-name">Shopping VHT</div>
+                    <div class="rating"><i class="fas fa-star"></i> 4.4 ★ (5k+)</div>
+                </div>
+                <div class="card-content">
+                    <p>"Shopping especializado em moda masculina com excelente custo-benefício"</p>
+                    <div class="info-item">
+                        <i class="fas fa-location-dot"></i>
+                        <span>R. dos Têxteis, 210 - Brás, São Paulo</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-clock"></i>
+                        <span><span class="status closed">Fechado</span> ⋅ Abre seg. às 06:00</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-phone"></i>
+                        <span>(11) 2785-1122</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="map-section">
+            <h2><i class="fas fa-map-marked-alt"></i> Mapa dos Shoppings</h2>
+            <div class="map-container">
+                <div class="map-placeholder">
+                    <i class="fas fa-map"></i>
+                    <h3>Localização dos Shoppings do Brás</h3>
+                    <p>Visualize no mapa a localização de todos os shoppings listados para planejar melhor sua visita</p>
+                    <button style="background: var(--accent); color: white; border: none; border-radius: 50px; padding: 12px 30px; margin-top: 20px; font-size: 1.1rem; cursor: pointer;">
+                        Abrir Mapa Completo
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tips">
+            <h2><i class="fas fa-lightbulb"></i> Dicas para sua Visita</h2>
+            <div class="tips-grid">
+                <div class="tip-card">
+                    <h3><i class="fas fa-wallet"></i> Dinheiro em Espécie</h3>
+                    <p>Muitos estabelecimentos oferecem descontos para pagamentos em dinheiro, então é recomendado levar uma quantia adequada.</p>
+                </div>
+                <div class="tip-card">
+                    <h3><i class="fas fa-shoe-prints"></i> Calçados Confortáveis</h3>
+                    <p>Você caminhará bastante entre os shoppings e galerias, então escolha sapatos adequados para longas caminhadas.</p>
+                </div>
+                <div class="tip-card">
+                    <h3><i class="fas fa-clock"></i> Horário Ideal</h3>
+                    <p>Chegue cedo para evitar multidões, ter mais espaço para negociar e aproveitar os melhores produtos disponíveis.</p>
+                </div>
+                <div class="tip-card">
+                    <h3><i class="fas fa-map"></i> Planeje seu Roteiro</h3>
+                    <p>Estude o mapa antes de sair para otimizar seu tempo e visitar os shoppings que oferecem os produtos que você procura.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <h3>Shoppings do Brás</h3>
+            <p>O seu guia completo para as melhores experiências de compras na região do Brás em São Paulo</p>
+            
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-tiktok"></i></a>
+            </div>
+            
+            <p class="copyright">© 2025 Shoppings do Brás. Todos os direitos reservados. | Criado por Gleyson</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Filtro de shoppings
+        document.querySelectorAll('.filter-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                // Aqui implementaria a lógica de filtragem
+                // Por simplicidade, vamos apenas mostrar todos
+                document.querySelectorAll('.shopping-card').forEach(card => {
+                    card.style.display = 'block';
+                });
+            });
+        });
+        
+        // Botão de busca
+        document.querySelector('.search-bar button').addEventListener('click', function() {
+            const searchTerm = document.querySelector('.search-bar input').value.toLowerCase();
+            
+            document.querySelectorAll('.shopping-card').forEach(card => {
+                const name = card.querySelector('.shopping-name').textContent.toLowerCase();
+                const description = card.querySelector('.card-content p').textContent.toLowerCase();
+                
+                if (name.includes(searchTerm) || description.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+        
+        // Animações ao rolar
+        window.addEventListener('scroll', function() {
+            const cards = document.querySelectorAll('.shopping-card');
+            cards.forEach(card => {
+                const cardTop = card.getBoundingClientRect().top;
+                if (cardTop < window.innerHeight * 0.9) {
+                    card.style.animation = 'fadeInUp 0.5s ease forwards';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

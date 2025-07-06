@@ -1,0 +1,172 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - Shoppings do Brás</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+        }
+        header {
+            text-align: center;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .register-container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .register-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .register-container label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .register-container input[type="text"],
+        .register-container input[type="email"],
+        .register-container input[type="tel"],
+        .register-container input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .register-container .lgpd-consent {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .register-container .lgpd-consent input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        .register-container .lgpd-consent label {
+            font-weight: normal;
+            font-size: 14px;
+        }
+        .register-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .register-container button:hover {
+            background-color: #218838;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #28a745;
+            color: white;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        footer a {
+            color: white;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        footer img {
+            width: 24px;
+            height: 24px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Shoppings do Brás</h1>
+        <p>Cadastre-se para uma melhor experiência de compras</p>
+    </header>
+
+    <div class="register-container">
+        <h2>Cadastro de Cliente</h2>
+        <form>
+            <label for="name">Nome Completo</label>
+            <input type="text" id="name" name="name" required placeholder="Digite seu nome completo">
+
+            <label for="email">E-mail</label>
+            <input type="email" id="email" name="email" required placeholder="Digite seu e-mail">
+
+            <label for="phone">Telefone</label>
+            <input type="tel" id="phone" name="phone" required placeholder="(11) 99999-9999" pattern="[0-9]{11}">
+
+            <label for="password">Senha</label>
+            <input type="password" id="password" name="password" required placeholder="Crie uma senha">
+
+            <div class="lgpd-consent">
+                <input type="checkbox" id="lgpd" name="lgpd" required>
+                <label for="lgpd">Eu li e concordo com a <a href="/politica-de-privacidade" target="_blank">Política de Privacidade</a> e autorizo o tratamento dos meus dados pessoais conforme a LGPD (Lei Geral de Proteção de Dados).</label>
+            </div>
+
+            <button type="submit">Cadastrar</button>
+        </form>
+    </div>
+
+    <footer>
+        <p>Shoppings do Brás</p>
+        <p>O seu guia completo para as melhores experiências de compras na região do Brás em São Paulo</p>
+        <p><a href="https://wa.me/5511949238536" target="_blank">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp Icon"> Contato Gleyson: (11) 94923-8536
+        </a></p>
+        <p>© 2025 Shoppings do Brás. Todos os direitos reservados. | Criado por Gleyson</p>
+    </footer>
+</body>
+</html>
